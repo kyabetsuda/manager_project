@@ -89,6 +89,11 @@ class Person(AbstractBaseUser):
 
     is_active = models.BooleanField(default=True)
 
+    # hijack機能の実装に必要
+    is_admin = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=True)
+    is_superuser = models.BooleanField(default=False)
+
     USERNAME_FIELD = 'identifier'
 
 

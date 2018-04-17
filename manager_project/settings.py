@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'debug_toolbar',
     'manager',
+    'hijack',
+    'compat',
 ]
 
 MIDDLEWARE = [
@@ -171,3 +173,10 @@ if DEBUG:
         'TAG': 'div',
         'ENABLE_STACKTRACES': True,
     }
+
+
+HIJACK_LOGIN_REDIRECT_URL = '/worker_list/'
+HIJACK_LOGOUT_REDIRECT_URL = '/worker_list/'
+HIJACK_ALLOW_GET_REQUESTS = True
+
+HIJACK_USE_BOOTSTRAP = True

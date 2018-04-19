@@ -10,8 +10,9 @@ urlpatterns = [
     url(r'^accounts/login/', manager_view.CustomLoginView.as_view()),
     url(r'^register/', manager_view.RegisterView.as_view()),
     url(r'^user_list/', manager_view.UserListView.as_view()),
+    url(r'^article_list/', manager_view.ArticleListView.as_view()),
     url(r'^logout/', manager_view.logout_view),
-    url(r'^worker_list/', login_required(manager_view.WorkerListView.as_view())),
+    # url(r'^worker_list/', login_required(manager_view.WorkerListView.as_view())),
     url(r'^hijack/', include('hijack.urls')),
 ]
 

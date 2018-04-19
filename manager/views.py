@@ -4,6 +4,7 @@ from django.contrib.auth.views import login
 from django.contrib.auth import authenticate
 from django.contrib.auth import logout
 import datetime
+import logging
 
 from manager.models import *
 
@@ -35,15 +36,6 @@ class CustomLoginView(TemplateView):
             redirect_url = '/worker_list/'
         return redirect_url
 
-
-class WorkerListView(TemplateView):
-	template_name = "worker_list.html"
-
-	def get(self, request, *args, **kwargs):
-		context = super(WorkerListView, self).get_context_data(**kwargs)
-		workers = Worker.objects.all().select_related('person')
-		context['workers'] = workers
-		return render(self.request, self.template_name, context)
 
 class RegisterView(TemplateView):
 	template_name = "register.html"
@@ -79,6 +71,30 @@ class UserListView(TemplateView):
 		context['persons'] = persons
 		return render(self.request, self.template_name, context)
 
+class ArticleListView(TemplateView):
+    template_name = "article_list.html"
+
+    def get(self, request, *args, **kwargs):
+        info(self.request.user.id)
+        person = Person.objects.get(pk=self.request.user.id)
+        context = super(ArticleListView, self).get_context_data(**kwargs)
+        articles = Article.objects.all()
+        context['articles'] = articles
+        return render(self.request, self.template_name, context)
+
+    def post(self, _, *args, **kwargs):
+        person = Person.objects.get(pk=self.request.user.id)
+        title = self.request.POST['title']
+        text = self.request.POST['text']
+        Article.objects.create(person=person, title=title, text=text, insymd=datetime.datetime.today())
+
+        return redirect('/article_list/')
+
+
 def logout_view(request):
     logout(request)
     return redirect('/accounts/login/')
+
+def info(msg):
+    logger = logging.getLogger('command')
+    logger.info(msg)

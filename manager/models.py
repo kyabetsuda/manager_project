@@ -97,38 +97,13 @@ class Person(AbstractBaseUser):
     USERNAME_FIELD = 'identifier'
 
 
-class Manager(models.Model):
-
-    # 部署の定数
-    DEP_ACCOUNTING = 0  # 経理
-    DEP_SALES = 5  # 営業
-    DEP_PRODUCTION = 10  # 製造
-    DEP_DEVELOPMENT = 15  # 開発
-    DEP_HR = 20  # 人事
-    DEP_FIN = 25  # 財務
-    DEP_AFFAIRS = 30  # 総務
-    DEP_PLANNING = 35  # 企画
-    DEP_BUSINESS = 40  # 業務
-    DEP_DISTR = 45  # 流通
-    DEP_IS = 50  # 情報システム
+class Article(models.Model):
 
     # 人
     person = models.ForeignKey('Person', on_delete=models.CASCADE)
-    # 部署
-    department = models.IntegerField()
-    # 着任時期
-    joined_at = models.DateTimeField()
-    # やめた時期
-    quited_at = models.DateTimeField(null=True, blank=True)
-
-
-class Worker(models.Model):
-
-    # 人
-    person = models.ForeignKey('Person', on_delete=models.CASCADE)
-    # 着任時期
-    joined_at = models.DateTimeField()
-    # やめた時期
-    quited_at = models.DateTimeField(null=True, blank=True)
-    # 担当上司
-    manager = models.ForeignKey('Manager', on_delete=models.CASCADE)
+    # タイトル
+    title = models.CharField(max_length=100)
+    # 日付
+    insymd = models.DateTimeField()
+    # 本文
+    text = models.CharField(max_length=100)

@@ -7,6 +7,7 @@ import datetime
 import logging
 
 from manager.models import *
+from manager.forms import *
 
 
 class CustomLoginView(TemplateView):
@@ -38,29 +39,38 @@ class CustomLoginView(TemplateView):
 
 
 class RegisterView(TemplateView):
-	template_name = "register.html"
+    template_name = "register.html"
 
-	def get(self, request, *args, **kwargs):
-		context = super(RegisterView, self).get_context_data(**kwargs)
-		return render(self.request, self.template_name, context)
+    def get(self, request, *args, **kwargs):
+        context = super(RegisterView, self).get_context_data(**kwargs)
+        return render(self.request, self.template_name, context)
 
-	def post(self, _, *args, **kwargs):
-		identifier = self.request.POST['identifier']
-		name = self.request.POST['name']
-		password = self.request.POST['password']
-		email = self.request.POST['email']
-		year = self.request.POST['birth_year']
-		month = self.request.POST['birth_month']
-		day = self.request.POST['birth_day']
-		sex = self.request.POST['sex']
-		address_from = self.request.POST['address_from']
-		current_address = self.request.POST['current_address']
+    def post(self, _, *args, **kwargs):
+        identifier = self.request.POST['identifier']
+        name = self.request.POST['name']
+        password = self.request.POST['password']
+        email = self.request.POST['email']
+        year = self.request.POST['birth_year']
+        month = self.request.POST['birth_month']
+        day = self.request.POST['birth_day']
+        sex = self.request.POST['sex']
+        address_from = self.request.POST['address_from']
+        current_address = self.request.POST['current_address']
 
-		person = Person(identifier=identifier, name=name, email=email, birthday=datetime.datetime(int(year), int(month), int(day)), sex=int(sex), address_from=int(address_from), current_address=int(current_address), is_superuser=False)
-		person.set_password(password)
-		person.save()
+        form = RegisterForm(self.request.POST)
+        if form.is_valid():
+            person = Person(identifier=identifier, name=name, email=email, birthday=datetime.datetime(int(year), int(month), int(day)), sex=int(sex), address_from=int(address_from), current_address=int(current_address), is_superuser=False)
+            person.set_password(password)
+            person.save()
 
-		return redirect('/user_list/')
+            return redirect('/user_list/')
+        else:
+            context = super(RegisterView, self).get_context_data(**kwargs)
+            context['errors'] = 'error!'
+            context['aiueo'] = 'aiueo!'
+            return render(self.request, self.template_name, context)
+
+
 
 class UserListView(TemplateView):
 	template_name = "user_list.html"

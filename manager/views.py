@@ -49,17 +49,10 @@ class RegisterView(TemplateView):
         identifier = self.request.POST['identifier']
         name = self.request.POST['name']
         password = self.request.POST['password']
-        email = self.request.POST['email']
-        year = self.request.POST['birth_year']
-        month = self.request.POST['birth_month']
-        day = self.request.POST['birth_day']
-        sex = self.request.POST['sex']
-        address_from = self.request.POST['address_from']
-        current_address = self.request.POST['current_address']
 
         form = RegisterForm(self.request.POST)
         if form.is_valid():
-            person = Person(identifier=identifier, name=name, email=email, birthday=datetime.datetime(int(year), int(month), int(day)), sex=int(sex), address_from=int(address_from), current_address=int(current_address), is_superuser=False)
+            person = Person(identifier=identifier, name=name, is_superuser=False)
             person.set_password(password)
             person.save()
 

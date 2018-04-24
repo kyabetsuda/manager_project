@@ -7,18 +7,6 @@ class RegisterForm(forms.Form):
     name = forms.CharField()
     #パスワード
     password = forms.CharField()
-    # メールアドレス
-    email = forms.EmailField()
-    # 誕生日
-    birth_year = forms.IntegerField()
-    birth_month = forms.IntegerField()
-    birth_day = forms.IntegerField()
-    # 性別
-    sex = forms.IntegerField()
-    # 出身地
-    address_from = forms.IntegerField()
-    # 現住所
-    current_address = forms.IntegerField()
 
     def clean_name(self):
         name = self.cleaned_data['name']

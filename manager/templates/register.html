@@ -15,31 +15,39 @@
                   <fieldset>
                     <div class="form-group">
                       <input class="form-control" placeholder="ID" name="identifier" autofocus>
+                      <div style="color : red">{{ form.identifier.errors }}</div>
                     </div>
                     <div class="form-group">
                       <input class="form-control" placeholder="Password" name="password" type="password" value="">
-                      <div>{{ aiueo }}</div>
+                      <div style="color : red">{{ form.password.errors }}</div>
                     </div>
                     <div class="form-group">
                       <input class="form-control" placeholder="Name" name="name" value="">
-                      <div>{{ errors }}</div>
+                      <div style="color : red">{{ form.name.errors }}</div>
                     </div>
                     <div class="form-group">
                       <input class="form-control" placeholder="Email" name="email" value="">
+                      <div style="color : red">{{ form.email.errors }}</div>
                     </div>
                     <div class="form-group">
                       <input class="form-control" placeholder="Birth_Year" name="birth_year" value="">
+                      <div style="color : red">{{ form.birth_year.errors }}</div>
                       <input class="form-control" placeholder="Birth_Month" name="birth_month" value="">
+                      <div style="color : red">{{ form.birth_month.errors }}</div>
                       <input class="form-control" placeholder="Birth_Day" name="birth_day" value="">
+                      <div style="color : red">{{ form.birth_day.errors }}</div>
                     </div>
                     <div class="form-group">
                       <input class="form-control" placeholder="Sex" name="sex" value="">
+                      <div style="color : red">{{ form.sex.errors }}</div>
                     </div>
                     <div class="form-group">
                       <input class="form-control" placeholder="Address_From" name="address_from" value="">
+                      <div style="color : red">{{ form.address_from.errors }}</div>
                     </div>
                     <div class="form-group">
                       <input class="form-control" placeholder="Current_Address" name="current_address" value="">
+                      <div style="color : red">{{ form.current_address.errors }}</div>
                     </div>
                     <input class="btn btn-primary btn-lg btn-block" type="submit" value="Login" />
                   </fieldset>

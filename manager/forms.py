@@ -5,10 +5,14 @@ class RegisterForm(forms.Form):
     identifier = forms.CharField()
     # 名前
     name = forms.CharField()
+    #パスワード
+    password = forms.CharField()
     # メールアドレス
     email = forms.EmailField()
     # 誕生日
-    birthday = forms.DateTimeField()
+    birth_year = forms.IntegerField()
+    birth_month = forms.IntegerField()
+    birth_day = forms.IntegerField()
     # 性別
     sex = forms.IntegerField()
     # 出身地

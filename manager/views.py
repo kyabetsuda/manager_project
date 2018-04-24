@@ -66,8 +66,7 @@ class RegisterView(TemplateView):
             return redirect('/user_list/')
         else:
             context = super(RegisterView, self).get_context_data(**kwargs)
-            context['errors'] = 'error!'
-            context['aiueo'] = 'aiueo!'
+            context['form'] = form
             return render(self.request, self.template_name, context)
 
 

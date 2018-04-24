@@ -15,23 +15,11 @@
 
                 <div class="panel-body full-width full-height">
                   <table id="worker-list-table" class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline full-width">
-                    <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>thread_id</th>
-                        <th>タイトル</th>
-                        <th>ユーザ名</th>
-                        <th>テキスト</th>
-                      </tr>
-                    </thead>
                     <tbody>
-                    {% for article in articles %}
+                    {% for thread in threads %}
                       <tr>
-                        <td>{{article.id}}</td>
-                        <td>{{article.thread.id}}</td>
-                        <td>{{article.title}}</td>
-                        <td>{{article.person.name}}</td>
-                        <td>{{article.text}}</td>
+                        <td>{{thread.insymd}}</td>
+                        <td><a href="/article_list/?thread_id={{thread.id}}">{{thread.title}}</a></td>
                       </tr>
                     {% endfor %}
                     </tbody>
@@ -43,17 +31,13 @@
                     <div class="col-md-4 col-md-offset-4">
                       <div class="login-panel panel panel-default">
                         <div class="panel-heading">
-                          <h3 class="panel-title">Register</h3>
+                          <h3 class="panel-title">AddThread</h3>
                         </div>
                         <div class="panel-body">
-                          <form role="form" action="/article_list/" method="post">{% csrf_token %}
+                          <form role="form" action="/thread_list/" method="post">{% csrf_token %}
                             <fieldset>
-                              <input type="hidden" name="thread_id" value="{{thread_id}}" >
                               <div class="form-group">
                                 <input class="form-control" placeholder="Title" name="title" value="">
-                              </div>
-                              <div class="form-group">
-                                <textarea class="form-control" name="text" cols="50" rows="5"></textarea>
                               </div>
                               <input class="btn btn-primary btn-lg btn-block" type="submit" value="Submit" />
                             </fieldset>

@@ -34,7 +34,7 @@ class CustomLoginView(TemplateView):
     def get_next_redirect_url(self):
         redirect_url = self.request.GET.get('next')
         if not redirect_url or redirect_url == '/':
-            redirect_url = '/worker_list/'
+            redirect_url = '/article_list/'
         return redirect_url
 
 
@@ -77,20 +77,39 @@ class ArticleListView(TemplateView):
     template_name = "article_list.html"
 
     def get(self, request, *args, **kwargs):
-        info(self.request.user.id)
+        info(request.GET.get("thread_id"))
         person = Person.objects.get(pk=self.request.user.id)
         context = super(ArticleListView, self).get_context_data(**kwargs)
         articles = Article.objects.all()
         context['articles'] = articles
+        context['thread_id'] = request.GET.get("thread_id")
         return render(self.request, self.template_name, context)
 
     def post(self, _, *args, **kwargs):
         person = Person.objects.get(pk=self.request.user.id)
+        thread = Thread.objects.get(pk=self.request.POST['thread_id'])
         title = self.request.POST['title']
         text = self.request.POST['text']
-        Article.objects.create(person=person, title=title, text=text, insymd=datetime.datetime.today())
+        Article.objects.create(person=person, thread=thread, title=title, text=text, insymd=datetime.datetime.today())
 
-        return redirect('/article_list/')
+        return redirect('/article_list/?thread_id=' + str(thread.id))
+
+class ThreadListView(TemplateView):
+    template_name = "thread_list.html"
+
+    def get(self, request, *args, **kwargs):
+        context = super(ThreadListView, self).get_context_data(**kwargs)
+        threads = Thread.objects.all()
+        context['threads'] = threads
+        return render(self.request, self.template_name, context)
+
+    def post(self, _, *args, **kwargs):
+        title = self.request.POST['title']
+        insymd = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        Thread.objects.create(title=title, insymd=insymd)
+
+        return redirect('/thread_list/')
+
 
 
 def logout_view(request):

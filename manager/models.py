@@ -24,9 +24,18 @@ class Article(models.Model):
 
     # 人
     person = models.ForeignKey('Person', on_delete=models.CASCADE)
+    # スレッド
+    thread = models.ForeignKey('Thread', on_delete=models.CASCADE)
     # タイトル
     title = models.CharField(max_length=100)
     # 日付
     insymd = models.DateTimeField()
     # 本文
     text = models.CharField(max_length=100)
+
+class Thread(models.Model):
+
+    # タイトル
+    title = models.CharField(max_length=100)
+    # 日付
+    insymd = models.DateTimeField()

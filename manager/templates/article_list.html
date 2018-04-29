@@ -10,38 +10,64 @@
               <div class="panel panel-default full-width">
 
                 <div class="panel-heading">
-                  Edit Help
+                  記事一覧
                 </div>
 
                 <div class="panel-body full-width full-height">
-                  <table id="worker-list-table" class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline full-width">
-                    <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>thread_id</th>
-                        <th>タイトル</th>
-                        <th>ユーザ名</th>
-                        <th>テキスト</th>
-                      </tr>
-                    </thead>
+                  <!-- <table id="worker-list-table" class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline full-width">
                     <tbody>
                     {% for article in articles %}
                       <tr>
-                        <td>{{article.id}}</td>
-                        <td>{{article.thread.id}}</td>
                         <td>{{article.title}}</td>
                         <td>{{article.person.name}}</td>
+                      </tr>
+                      <tr>
                         <td>{{article.text}}</td>
                       </tr>
+                      <hr />
                     {% endfor %}
                     </tbody>
-                  </table>
+                  </table> -->
+                  {% for article in articles %}
+                    <div style="font-weight : bold">
+                      <span>{{article.title}}</spam>
+                      <span> by </span>
+                      <span>{{article.person.name}}</span>
+                      <span> {{article.insymd}}</span>
+                    </div>
+                    <div>{{article.text}}</div>
+                    <hr />
+                  {% endfor %}
+
+                  <div class="row" style="text-align: center">
+                    <nav>
+                    	<ul class="pagination full-width full-height">
+                    		<li>
+                          {% if start %}
+                      			<a href="http://192.168.33.10:8000/article_list/?thread_id={{thread_id}}&page={{page|add:"-1"}}" aria-label="前のページへ">
+                      				<span aria-hidden="true">«</span>
+                      			</a>
+                          {% endif %}
+                    		</li>
+                        {% for number in numbers %}
+                    		  <li><a href="http://192.168.33.10:8000/article_list/?thread_id={{thread_id}}&page={{number}}">{{number}}</a></li>
+                        {% endfor %}
+                        <li>
+                        {% if end %}
+                    			<a href="http://192.168.33.10:8000/article_list/?thread_id={{thread_id}}&page={{page|add:"1"}}" aria-label="次のページへ">
+                    				<span aria-hidden="true">»</span>
+                    			</a>
+                        {% endif %}
+                    		</li>
+                    	</ul>
+                    </nav>
+                  </div>
                 </div>
 
                 <div class="container">
                   <div class="row">
                     <div class="col-md-4 col-md-offset-4">
-                      <div class="login-panel panel panel-default">
+                      <div class="panel panel-default">
                         <div class="panel-heading">
                           <h3 class="panel-title">Register</h3>
                         </div>
@@ -65,44 +91,9 @@
                   </div>
                 </div>
 
-                <nav>
-                	<ul class="pagination">
-                		<li>
-                      {% if start %}
-                  			<a href="http://192.168.33.10:8000/article_list/?thread_id=2&page={{page|add:"-1"}}" aria-label="前のページへ">
-                  				<span aria-hidden="true">«</span>
-                  			</a>
-                      {% endif %}
-                		</li>
-                    {% for number in numbers %}
-                		  <li><a href="http://192.168.33.10:8000/article_list/?thread_id=2&page={{number}}">{{number}}</a></li>
-                    {% endfor %}
-                    <li>
-                    {% if end %}
-                			<a href="http://192.168.33.10:8000/article_list/?thread_id=2&page={{page|add:"1"}}" aria-label="次のページへ">
-                				<span aria-hidden="true">»</span>
-                			</a>
-                    {% endif %}
-                		</li>
-                	</ul>
-                </nav>
-
               </div>
             </div>
           </div>
         </div>
       </div>
-
-
-      <!-- <script>
-        $(document).ready(function() {
-            $('#worker-list-table').DataTable({
-                responsive: true,
-                // sort機能の無効化
-                ordering: false,
-                // ページの表示件数を変更する
-                displayLength: 20,
-            });
-        });
-      </script> -->
       {% endblock %}

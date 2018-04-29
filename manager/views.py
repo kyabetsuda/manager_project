@@ -34,7 +34,7 @@ class CustomLoginView(TemplateView):
     def get_next_redirect_url(self):
         redirect_url = self.request.GET.get('next')
         if not redirect_url or redirect_url == '/':
-            redirect_url = '/article_list/'
+            redirect_url = '/thread_list/'
         return redirect_url
 
 
@@ -97,9 +97,11 @@ class ArticleListView(TemplateView):
         # 最初のページの場合
         if page == 1:
             context['start'] = False;
+
         # 最後のページの場合
-        elif (len(articles) // (page*5)) <= 0:
+        if (len(articles) // (page*5)) <= 0:
             context['end'] = False
+            
         # ページ番号挿入
         # もし記事数が25(5*5に満たない場合)
         if len(articles)//5 < 5:

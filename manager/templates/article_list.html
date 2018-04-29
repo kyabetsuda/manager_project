@@ -49,6 +49,7 @@
                           <form role="form" action="/article_list/" method="post">{% csrf_token %}
                             <fieldset>
                               <input type="hidden" name="thread_id" value="{{thread_id}}" >
+                              <input type="hidden" name="page" value="{{page}}" >
                               <div class="form-group">
                                 <input class="form-control" placeholder="Title" name="title" value="">
                               </div>
@@ -64,6 +65,28 @@
                   </div>
                 </div>
 
+                <nav>
+                	<ul class="pagination">
+                		<li>
+                      {% if start %}
+                  			<a href="http://192.168.33.10:8000/article_list/?thread_id=2&page={{page|add:"-1"}}" aria-label="前のページへ">
+                  				<span aria-hidden="true">«</span>
+                  			</a>
+                      {% endif %}
+                		</li>
+                    {% for number in numbers %}
+                		  <li><a href="http://192.168.33.10:8000/article_list/?thread_id=2&page={{number}}">{{number}}</a></li>
+                    {% endfor %}
+                    <li>
+                    {% if end %}
+                			<a href="http://192.168.33.10:8000/article_list/?thread_id=2&page={{page|add:"1"}}" aria-label="次のページへ">
+                				<span aria-hidden="true">»</span>
+                			</a>
+                    {% endif %}
+                		</li>
+                	</ul>
+                </nav>
+
               </div>
             </div>
           </div>
@@ -71,7 +94,7 @@
       </div>
 
 
-      <script>
+      <!-- <script>
         $(document).ready(function() {
             $('#worker-list-table').DataTable({
                 responsive: true,
@@ -81,5 +104,5 @@
                 displayLength: 20,
             });
         });
-      </script>
+      </script> -->
       {% endblock %}
